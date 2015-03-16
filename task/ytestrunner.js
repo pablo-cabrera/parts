@@ -16,7 +16,6 @@ module.exports = function (grunt) {
                 console.log("[TEST] Test files: " + includes);
 
                 ytestrunner.cli.runConfig({
-                    verbose: false,
                     coverage: coverage ? coverage === "true" : true,
                     saveResults: true,
                     resultsFile: path.resolve(cwd, "test-result/results"),
@@ -31,7 +30,8 @@ module.exports = function (grunt) {
                     covInclude: ["lib/**/*.js"],
                     covExclude: ["**/.*", "**/node_modules/**"],
                     resultsFormat: "junitxml",
-                    coverageReportFormat: "lcov"
+                    coverageReportFormat: "cobertura",
+                    istanbul: true
                 }, function (err, testData) {
                     //Async fail if any test fails
                     done(testData.failed === 0);
