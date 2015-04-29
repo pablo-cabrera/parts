@@ -1,6 +1,6 @@
 {
     "name" : "parts",
-    "version" : "0.0.1-alpha.001",
+    "version" : "0.0.1-alpha.003",
     "author" : "Pablo Cabrera <pablo@chaordicsystems.com>",
     "description" : "Utilities for JavaScript",
     "homepage" : "https://github.com/pablo-cabrera/parts",
