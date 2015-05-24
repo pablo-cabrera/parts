@@ -67,5 +67,6 @@
     "disallowNewlineBeforeBlockStatements": true,
     "disallowMultipleLineStrings": true,
     "disallowSpaceAfterObjectKeys": true,
-    "requireSpaceBeforeObjectValues": true
+    "requireSpaceBeforeObjectValues": true,
+    "maximumLineLength": 80
 }

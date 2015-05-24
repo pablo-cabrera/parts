@@ -18,9 +18,8 @@
         "grunt-contrib-jshint" : "^0.11",
         "grunt-contrib-uglify" : "^0.8",
         "grunt-contrib-yuidoc" : "^0.4",
-        "ytestrunner" : "^0.3",
-        "yuitest" : "^0.7",
-        "colors" : "^1.0"
+        "grunt-gabarito": "^0.0.1-alpha.006",
+        "gabarito": "^0.0.1-alpha.006"
     },
     "scripts" : {
         "test" : "grunt"
