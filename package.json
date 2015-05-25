@@ -1,46 +1,49 @@
 {
-    "name" : "parts",
-    "version" : "0.0.1-alpha.003",
-    "author" : "Pablo Cabrera <pablo@chaordicsystems.com>",
-    "description" : "Utilities for JavaScript",
-    "homepage" : "https://github.com/pablo-cabrera/parts",
-    "repository" : {
-        "type" : "git",
-        "url" : "git://github.com/pablo-cabrera/parts.git"
-    },
-    "license" : "MIT",
-    "main" : "./lib/parts.js",
-    "devDependencies" : {
-        "grunt" : "^0.4",
-        "grunt-jscs" : "^1.5",
-        "grunt-contrib-copy" : "^0.8",
-        "grunt-contrib-clean" : "^0.6",
-        "grunt-contrib-jshint" : "^0.11",
-        "grunt-contrib-uglify" : "^0.8",
-        "grunt-contrib-yuidoc" : "^0.4",
-        "grunt-gabarito": "^0.0.1-alpha.006",
-        "gabarito": "^0.0.1-alpha.006"
-    },
-    "scripts" : {
-        "test" : "grunt"
-    },
-    "bugs" : {
-        "url" : "https://github.com/pablo-cabrera/parts/issues"
-    },
-    "directories" : {
-        "test" : "test"
-    },
-    "dependencies" : {
-        "colors" : "^1.0.3",
-        "grunt" : "^0.4.5",
-        "grunt-contrib-clean" : "^0.6.0",
-        "grunt-contrib-jshint" : "^0.11.0",
-        "grunt-contrib-uglify" : "^0.8.0",
-        "grunt-contrib-yuidoc" : "^0.4.0",
-        "grunt-jscs" : "^1.5.0",
-        "ytestrunner" : "^0.3.3",
-        "yuitest" : "^0.7.9",
-        "grunt-contrib-copy" : "^0.8.0"
-    },
-    "keywords" : ["utililies"]
+  "name": "parts",
+  "version": "0.0.1-alpha.003",
+  "author": "Pablo Cabrera <pablo@chaordicsystems.com>",
+  "description": "Utilities for JavaScript",
+  "homepage": "https://github.com/pablo-cabrera/parts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pablo-cabrera/parts.git"
+  },
+  "license": "MIT",
+  "main": "./lib/parts.js",
+  "devDependencies": {
+    "gabarito": "^0.0.1-alpha.006",
+    "grunt": "^0.4",
+    "grunt-contrib-clean": "^0.6",
+    "grunt-contrib-copy": "^0.8",
+    "grunt-contrib-jshint": "^0.11",
+    "grunt-contrib-uglify": "^0.8",
+    "grunt-contrib-yuidoc": "^0.4",
+    "grunt-gabarito": "^0.0.1-alpha.006",
+    "grunt-jscs": "^1.5",
+    "yuidoc-lucid-theme": "^0.1.1"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "bugs": {
+    "url": "https://github.com/pablo-cabrera/parts/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "colors": "^1.0.3",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-yuidoc": "^0.4.0",
+    "grunt-jscs": "^1.5.0",
+    "ytestrunner": "^0.3.3",
+    "yuitest": "^0.7.9",
+    "grunt-contrib-copy": "^0.8.0"
+  },
+  "keywords": [
+    "utililies"
+  ]
 }
