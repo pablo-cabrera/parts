@@ -31,23 +31,6 @@ module.exports = function (grunt) {
                 }
             },
 
-            "ie11": {
-                src: testFiles,
-
-                options: {
-                    environments: [
-                        {
-                            "type": "vbox-selenium",
-                            "browserName": "internet explorer",
-                            "version": "11",
-                            "platform": "WINDOWS",
-                            "vm": "IE11 - Win7",
-                            "vmAddress": "20.0.0.151"
-                        }
-                    ]
-                }
-            },
-
             ci: {
                 src: testFiles
             }
