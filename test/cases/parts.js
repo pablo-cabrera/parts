@@ -161,6 +161,83 @@
         assert.isFalse(parts.hop(o, "a"));
     })
 
+    ("indexOf should iterate through all the indexes of an array looking " +
+            "for an occurrence",
+    function () {
+        var arr = [1, 2, 3];
+        var iterations = [];
+        parts.indexOf(arr, function (v, k) {
+            iterations.push({
+                v: v,
+                k: k
+            });
+
+            return false;
+        });
+
+        assert.areSame(iterations.length, 3);
+
+        parts.forEach(iterations, function (v, k) {
+            assert.areSame(v.v, arr[k]);
+            assert.areSame(v.k, k);
+        });
+    })
+
+    ("indexOf should iterate through all the indexes of an object looking " +
+            "for an occurrence",
+    function () {
+        var obj = {
+            a: 1,
+            b: 2,
+            c: 3
+        };
+
+        var iterations = {};
+
+        parts.indexOf(obj, function (v, k) {
+            iterations[k] = v;
+            return false;
+        });
+
+        assert.areEqual(obj, iterations);
+    })
+
+    ("indexOf should return undefined in case no occurrence is found",
+    function () {
+        var arr = [];
+        var index = parts.indexOf(arr, parts.constant(false));
+
+        assert.isUndefined(index);
+    })
+
+    ("indexOf should return the index of the first occurrence within the " +
+            "array when found",
+    function () {
+        var arr = [1, 2, 3];
+
+        var index = parts.indexOf(arr, function (v) {
+            return v > 1;
+        });
+
+        assert.areSame(index, 1);
+    })
+
+    ("indexOf should return the index of the first occurrence within the " +
+            "object when found",
+    function () {
+        var obj = {
+            a: 1,
+            b: 2,
+            c: 3
+        };
+
+        var index = parts.indexOf(obj, function (v) {
+            return v === 2;
+        });
+
+        assert.areSame(index, "b");
+    })
+
     ("merge should copy all the properties from a source object to a target " +
             "object",
     function () {
