@@ -1,6 +1,4 @@
 .project
-dist
-docs
 node_modules
 test-result
 npm-debug.log

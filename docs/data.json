@@ -1,0 +1,714 @@
+{
+    "project": {
+        "name": "parts",
+        "description": "Utilities for JavaScript",
+        "version": "0.0.1-alpha.003",
+        "url": "https://github.com/pablo-cabrera/parts"
+    },
+    "files": {
+        "lib/parts.js": {
+            "name": "lib/parts.js",
+            "modules": {},
+            "classes": {
+                "parts.Parts": 1
+            },
+            "fors": {
+                "parts.Parts": 1
+            },
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "parts.Parts": {
+            "name": "parts.Parts",
+            "shortname": "parts.Parts",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/parts.js",
+            "line": 351,
+            "description": "Exported utilities class.",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib/parts.js",
+            "line": 359,
+            "description": "Returns a function that when called returns always the same\nstarting value.",
+            "itemtype": "method",
+            "name": "constant",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 371,
+            "description": "A function that does nothing and returns undefined. Useful when\nyou need a noop function.",
+            "itemtype": "method",
+            "name": "k",
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 380,
+            "description": "Returns a function that when called, passes the arguments\ncollection as an array to the passed function as its first\nparameter.",
+            "itemtype": "method",
+            "name": "args",
+            "params": [
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 394,
+            "description": "Processes the function on the next tick.",
+            "itemtype": "method",
+            "name": "work",
+            "params": [
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 404,
+            "description": "Short for object.hasOwnProperty(property).",
+            "itemtype": "method",
+            "name": "hop",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "property",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 417,
+            "description": "Copy the properties from the \"source\" object onto the\n\"target\" object. Optionally it can be passed an array\ncontaining the property-list to be copied, if ommited, all\nown properties should be copied.",
+            "itemtype": "method",
+            "name": "merge",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "source",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "propertyList",
+                    "description": "",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 432,
+            "description": "Looks for the first ocurrence that satisfies the conditional\nfunction of a given value within an array or an object,\nreturning its index or property.\n\nThe conditional function will be called for each item within\nthe collection, it will receive the item as first parameter\nand its index as the second. The function must return a\nboolean indicating whether the condition has been met.",
+            "itemtype": "method",
+            "name": "indexOf",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "condition",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number|string"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 452,
+            "description": "Returns the first ocurrence that satisfies the conditional\nfunction of a given value within an array or an object.\n\nThe conditional function will be called for each item within\nthe collection, it will receive the item as first parameter\nand its index as the second. The function must return a\nboolean indicating whether the condition has been met.\n\nIf the function is ommited, it will return the first item\nwithin the collection.",
+            "itemtype": "method",
+            "name": "first",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "condition",
+                    "description": "",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Mixed"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 474,
+            "description": "Executes a function for each item within the collection\n(array or object), passing the item itself as the first\nparameter and it's index as the second parameter.",
+            "itemtype": "method",
+            "name": "forEach",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 487,
+            "description": "Iterates through the items of a collection, calling the map\nfunction for each of those items, passing the item itself as\nfirst parameter and it's index as the second parameter. The\nfunction's return will be pushed to a new array that will be\nreturned in the end.",
+            "itemtype": "method",
+            "name": "map",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 504,
+            "description": "Short for:\nvar args = Array.prototype.slice.call(arguments);\nreturn Array.prototype.slice.apply(args.shift(), args);",
+            "itemtype": "method",
+            "name": "slice",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": "",
+                    "type": "Mixed"
+                },
+                {
+                    "name": "begin",
+                    "description": "",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "0"
+                },
+                {
+                    "name": "end",
+                    "description": "",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 520,
+            "description": "Kind of a method overloading. It should be called passing\nvarious functions, each with a different number of declared\nparameters.\n\nIt will return a function that depending of the number of\narguments passed, will call the respective function. If there\nis no respective function for a given number of arguments,\nthe latter function will be used as default.",
+            "itemtype": "method",
+            "name": "overload",
+            "params": [
+                {
+                    "name": "functions",
+                    "description": "",
+                    "type": "Function",
+                    "multiple": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 539,
+            "description": "Returns a function that when called, it will pass the _this_\nobject as first parameter, along with the remaining\nparameters if any.",
+            "itemtype": "method",
+            "name": "that",
+            "params": [
+                {
+                    "name": "thatFunction",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 553,
+            "description": "Indicates whether a pair of values are equal between themselves.\n\nEquals may mean the following:\n\n- are equal using ==\n- are arrays and have values that are equal along with themselves\n(recursively)\n- are objects and have properties that are equal along with\nthemselves (recursively)\n- are Date and have the same time\n- are RegExp and have the same toString",
+            "itemtype": "method",
+            "name": "equals",
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Mixed"
+                },
+                {
+                    "name": "b",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 578,
+            "description": "Performs a check upon every item within the collection, if all of\nthem returns true, then it returns true.",
+            "itemtype": "method",
+            "name": "every",
+            "params": [
+                {
+                    "name": "c",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 592,
+            "description": "Performs a check upon every item within the collection, if one of\nthem returns true, then it returns true.",
+            "itemtype": "method",
+            "name": "every",
+            "params": [
+                {
+                    "name": "c",
+                    "description": "",
+                    "type": "Array|object|string"
+                },
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 606,
+            "description": "Indicates whether a given value is an array.",
+            "itemtype": "method",
+            "name": "isArray",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 618,
+            "description": "Indicates whether a given value is a function.",
+            "itemtype": "method",
+            "name": "isFunction",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 630,
+            "description": "Indicates whether a given value is an object.",
+            "itemtype": "method",
+            "name": "isObject",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 642,
+            "description": "Indicates whether a given value is a Date instance.",
+            "itemtype": "method",
+            "name": "isDate",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 654,
+            "description": "Indicates whether a given value is a RegExp instance.",
+            "itemtype": "method",
+            "name": "isRegExp",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 666,
+            "description": "Asserts that a given value is NaN.\n\nNote that the value should be the actual NaN and not something that\nconverts to NaN.",
+            "itemtype": "method",
+            "name": "isNaN",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 681,
+            "description": "Indicates whether a given value is a boolean.",
+            "itemtype": "method",
+            "name": "isBoolean",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 693,
+            "description": "Indicates whether a given value is a number and is not NaN.",
+            "itemtype": "method",
+            "name": "isNumber",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 705,
+            "description": "Indicates whether a given value is a string.",
+            "itemtype": "method",
+            "name": "isString",
+            "params": [
+                {
+                    "name": "v",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 717,
+            "description": "Shoft for new Date().getTime().",
+            "itemtype": "method",
+            "name": "now",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 727,
+            "description": "Returns a function that compares a given value with some other value.",
+            "itemtype": "method",
+            "name": "sameAs",
+            "params": [
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 739,
+            "description": "Returns a function that calls the given function passing along its\narguments, but negates its value.",
+            "itemtype": "method",
+            "name": "negate",
+            "params": [
+                {
+                    "name": "f",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 752,
+            "description": "Object making utility.\n\nIt is useful when you want to declare object and cant use expressions\nin the object keys within literals.\n\nThe function may receive a key/value upon first call it will return\nchainable function that receives key/values at each call to populate\nthe object being built.\n\nWhen the object is ready, the build function may be called to retain\nthe built object.",
+            "itemtype": "method",
+            "name": "make",
+            "params": [
+                {
+                    "name": "k",
+                    "description": "A key",
+                    "type": "String"
+                },
+                {
+                    "name": "v",
+                    "description": "A value for the given key",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "The chainable function",
+                "type": "Function"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 784,
+            "description": "Returns a string representation of a given value for debugging\npurposes.\n\n- __b__: Boolean value\n- __n__: Number value\n- __s__: String value\n- __d__: Date object\n- __f__: Function object\n- __r__: Regex object\n- __a__: Array object\n- __nan__: `NaN` value\n- __null__: `null` value\n- __undefined__: `undefined` value\n- __ref__: Reference to a previous inspected object (with its number)\n\n```\nparts.dump(true);\n// <b: true>\n\nparts.dump(1);\n// <n: 1>\n\nparts.dump(\"msg\");\n// <s: \"msg\">\n\nparts.dump(someNaN);\n// <nan>\n\nparts.dump(null);\n// <null>\n\nparts.dump(undefined);\n// <undefined>\n\nparts.dump(new Date());\n// <0:d: Thu Oct 27 2016 14:48:52 GMT-0200 (BRST)>\n\nparts.dump(function () {});\n// <0:f: function () {}>\n\nparts.dump(/\\d+/);\n// <0:r: /\\\\d+/>\n\nparts.dump({});\n// <0:o: {}>\n\nparts.dump({ a: 1 });\n// <0:o: {\n//   \"a\": <n: 1>\n// }>\n\nparts.dump([]);\n// <0:a: []>\n\nparts.dump([1]);\n// <0:a: [\n//   <n: 1>\n// ]>\n\nvar o = {};\no.o = o;\nparts.dump(o);\n// <0:o: {\n//   \"o\": <0:ref>\n// }>\n```",
+            "itemtype": "method",
+            "name": "dump",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 860,
+            "description": "Formats a given message using the values within the placeholders\ninside the message itself.\n\nThere are 2 kinds of placeholders literal ones (marked by the __%__\nsign) and the ones that dump values (marked by the __$__ sign).\n\nLiteral placeholders will use the values as is, while the other one\nwill {{#crossLink \"parts.Parts/dump\"}}{{/crossLink}} every value\nbefore using it within the message.\n\n```\nparts.format(\"The number is %s\", [1]);\n// The number is 1\n\nparts.format(\"The value is $s\", [1]);\n// The value is <n: 1>\n```\n\nValues may be reference by the order in which they appear (using `$s`\n or `%s`), or by its position (`%1` or `$1`).\n\n```\nparts.format(\"The numbers are %s, %s and %s\", [1, 2, 3]);\n// The numbers are 1, 2 and 3\n\nparts.format(\n    \"The 3rd number is %3, the 2nd is %2 and the 1st is %1\" ,\n    [1, 2 ,3]);\n// The 3rd number is 3, the 2nd is 2 and the 1st is 1\n\nparts.format(\"The 2nd value is $2 and the 1st number is %1\", [1, 2]);\n// The 2nd value is <n: 2> and the 1st number is 1\n\nparts.format(\"Mixed placeholders $s, %s, $4, %3\", [1, 2, 3, 4]);\n// Mixed placeholders <n: 1>, 2, <n: 4>, 3\n```",
+            "itemtype": "method",
+            "name": "format",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "",
+                    "type": "Mixed[]"
+                }
+            ],
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 906,
+            "description": "Calls the constructor function passing the array of arguments within\nit.\n\nIt actually creates an anonymous subclass for the function and\ncalls it after it created the object itself. Its close enough for\nmost purposes.",
+            "itemtype": "method",
+            "name": "applyNew",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The constructor function",
+                    "type": "Function"
+                },
+                {
+                    "name": "args",
+                    "description": "The arguments to be passed to the constructor\n           function",
+                    "type": "Mixed[]"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Mixed"
+            },
+            "class": "parts.Parts"
+        },
+        {
+            "file": "lib/parts.js",
+            "line": 929,
+            "description": "Calls the function and ignores any thrown error",
+            "itemtype": "method",
+            "name": "silence",
+            "params": [
+                {
+                    "name": "f",
+                    "description": "The function block to be executed",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "returns the function returned value",
+                "type": "Mixed"
+            },
+            "class": "parts.Parts"
+        }
+    ],
+    "warnings": []
+}

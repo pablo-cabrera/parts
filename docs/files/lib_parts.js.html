@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/parts.js - parts</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html">parts: lib/parts.js</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1-alpha.003</em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            
+
+<div id="classes" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">Classes</h2>
+    </div>
+    <div class="bd">
+        <ul>
+            
+                <li><a href="../classes/parts.Parts.html">parts.Parts</a></li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="fileTree" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">Files</h2>
+    </div>
+    <div class="bd">
+        <ul><li>lib/<ul><li><a href="../files/lib_parts.js.html">parts.js</a></li></ul></li></ul>
+    </div>
+</div>
+
+
+
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>lib/parts.js</h4>
+
+<pre class="code prettyprint linenums">
+(function (node) {
+    &quot;use strict&quot;;
+
+    var main = node? global: window;
+    var arrayProto = Array.prototype;
+    var objectProto = Object.prototype;
+
+    var format = function (msg, args) {
+        var s = 0;
+        return msg.replace(/[$%](\d+|s)/g, function (m) {
+            var arg;
+            if (m.charAt(1) === &quot;s&quot;) {
+                arg = args[s];
+                s += 1;
+            } else {
+                arg = args[Number(m.substr(1)) - 1];
+            }
+
+            return m.charAt(0) === &quot;$&quot;? dump(arg): String(arg);
+        });
+    };
+
+    var now = function () { return new Date().getTime(); };
+
+    var checkType = function (n) {
+        return function (o) {
+            return objectProto.toString.call(o) === &quot;[object &quot; + n + &quot;]&quot;;
+        };
+    };
+
+    var regExpToStringCall = function (v) {
+        return RegExp.prototype.toString.call(v);
+    };
+
+    var isArray = checkType(&quot;Array&quot;);
+    var isFunction = checkType(&quot;Function&quot;);
+    var isDate = checkType(&quot;Date&quot;);
+    var isRegExp = checkType(&quot;RegExp&quot;);
+
+    var isObject = function (v) {
+        return v !== null &amp;&amp; (typeof v === &quot;object&quot; || isFunction(v));
+    };
+
+    var isBoolean = function (v) {
+        return v === true || v === false;
+    };
+
+    var isNumber = function (v) {
+        return typeof v === &quot;number&quot; &amp;&amp; !isNaN(v);
+    };
+
+    var isString = function (v) {
+        return typeof v === &quot;string&quot;;
+    };
+
+    var myIsNaN = function (n) {
+        return typeof n === &quot;number&quot; &amp;&amp; isNaN(n);
+    };
+
+    var sameAs = function (a) {
+        return function (b) {
+            return b === a;
+        };
+    };
+
+    var negate = function (f) {
+        return args(function (args) {
+            return !f.apply(this, args);
+        });
+    };
+
+    var equals = function (a, b, sa, sb) {
+        if (a === b) {
+            return true;
+        }
+
+        if (!(isObject(a) &amp;&amp; isObject(b))) {
+            return false;
+        }
+
+        var ioa = indexOf(sa, sameAs(a));
+        if (ioa !== undefined &amp;&amp; ioa === indexOf(sb, sameAs(b))) {
+            return true;
+        }
+
+        sa.push(a);
+        sb.push(b);
+
+        if (isArray(a) &amp;&amp; isArray(b)) {
+            return a.length === b.length &amp;&amp; every(a, function (v, i) {
+                return equals(v, b[i], sa, sb);
+            });
+        }
+
+        if (isRegExp(a) &amp;&amp; isRegExp(b)) {
+            return regExpToStringCall(a) === regExpToStringCall(b);
+        }
+
+        if (isDate(a) &amp;&amp; isDate(b)) {
+            return a.getTime() === b.getTime();
+        }
+
+        return (
+            every(a, function (v, p) { return equals(v, b[p], sa, sb); }) &amp;&amp;
+            every(b, function (v, p) { return equals(a[p], v, sa, sb); }));
+    };
+
+    var constant = function (v) { return function () { return v; }; };
+
+    var args = function (f) {
+        return function () {
+            return f.call(this, slice(arguments));
+        };
+    };
+
+    var noArgs = function (f) {
+        return function () { return f.call(this); };
+    };
+
+    var k = constant();
+
+    var work = node?
+        function (f) { setImmediate(f); }:
+        function (f) { setTimeout(f, 0); };
+
+    var hop = function (o, p) {
+        return objectProto.hasOwnProperty.call(o, p);
+    };
+
+    var merge = function (a, b, list) {
+        if (list) {
+            forEach(list, function (p) {
+                if (hop(b, p)) {
+                    a[p] = b[p];
+                }
+            });
+        } else {
+            forEach(b, function (v, p) {
+                a[p] = v;
+            });
+        }
+    };
+
+    var indexOf = function (a, f) {
+        var i = null,
+            l;
+
+        if (isArray(a)) {
+            for (i = 0, l = a.length; i &lt; l; i += 1) {
+                if (f(a[i], i)) {
+                    return i;
+                }
+            }
+        } else if (isString(a)) {
+            return indexOf(a.split(&quot;&quot;), f);
+        } else {
+            for (i in a) {
+                if (hop(a, i)) {
+                    if (f(a[i], i)) {
+                        return i;
+                    }
+                }
+            }
+        }
+    };
+
+    var first = function (a, f) {
+        var i = indexOf(a, f || constant(true));
+        if (i !== undefined) {
+            return a[i];
+        }
+    };
+
+    var forEach = function (a, f) {
+        indexOf(a, function (v, i) {
+            f(v, i);
+            return false;
+        });
+    };
+
+    var map = function (a, f) {
+        var o = [];
+        forEach(a, function (v, i) { o.push(f(v, i)); });
+        return o;
+    };
+
+    var slice = function () {
+        var args = arrayProto.slice.call(arguments);
+        return arrayProto.slice.apply(args.shift(), args);
+    };
+
+    var every = function (c, f) {
+        return indexOf(c, function (v, i) { return !f(v, i); }) === undefined;
+    };
+
+    var some = function (c, f) {
+        return !every(c, negate(f));
+    };
+
+
+
+    var hints = {
+        &quot;string&quot;: isString,
+        &quot;number&quot;: isNumber,
+        &quot;array&quot;: isArray,
+        &quot;date&quot;: isDate,
+        &quot;regexp&quot;: isRegExp,
+        &quot;function&quot;: isFunction,
+        &quot;object&quot;: isObject,
+        &quot;boolean&quot;: isBoolean
+    };
+
+    var overload = args(function (methods) {
+        var functions = {};
+
+        methods = map(methods, function (m) {
+            return isFunction(m)?
+                    {
+                        hints: [],
+                        method: m
+                    }:
+                    m;
+        });
+
+        forEach(methods, function (m) {
+            var l = m.method.length;
+            if (l in functions) {
+                functions[l].push(m);
+            } else {
+                functions[l] = [m];
+            }
+        });
+
+        functions.d = methods[methods.length - 1];
+
+        return args(function (args) {
+            var f;
+            if (args.length in functions) {
+                f = first(functions[args.length], function (f) {
+                    var hit = every(f.hints, function (h, i) {
+                        var a = args[i];
+                        if (isFunction(h)) {
+                            return a instanceof h;
+                        }
+
+                        if (h in hints) {
+                            return hints[h](a);
+                        }
+
+                        if (indexOf([&quot;mixed&quot;, &quot;*&quot;], h) !== -1) {
+                            return true;
+                        }
+
+                        throw new TypeError(&quot;Invalid type&quot;);
+                    });
+
+                    return hit;
+                });
+            }
+
+            return (f || functions.d).method.apply(this, args);
+        });
+    });
+
+    var that = function (f) {
+        return args(function (args) {
+            args.unshift(this);
+            return f.apply(this, args);
+        });
+    };
+
+    var dump = (function () {
+
+        var d = function (v, p, i, c, s) {
+            var ref;
+            var values;
+            var counter = c;
+
+            i = p? i + &quot;  &quot;: &quot;&quot;;
+
+            if (isObject(v)) {
+
+                ref = indexOf(s, sameAs(v));
+                if (ref !== undefined) {
+                    return &quot;&lt;&quot; + ref + &quot;:ref&gt;&quot;;
+                }
+
+                s.push(v);
+
+                if (isDate(v)) {
+                    return &quot;&lt;&quot; + c + &quot;:d: &quot; + v.toString() + &quot;&gt;&quot;;
+                }
+
+                if (isRegExp(v)) {
+                    return &quot;&lt;&quot; + c + &quot;:r: &quot; + v.toString() + &quot;&gt;&quot;;
+                }
+
+                if (isFunction(v)) {
+                    return &quot;&lt;&quot; + c + &quot;:f: &quot; + v.toString() + &quot;&gt;&quot;;
+                }
+
+                if (isArray(v)) {
+
+
+                    values = map(v, function (v) {
+                        if (isObject(v)) {
+                            counter += 1;
+                        }
+
+                        return d(v, p, i, counter, s);
+                    });
+
+                    return values.length === 0?
+                        &quot;&lt;&quot; + c + &quot;:a: []&gt;&quot;:
+                        &quot;&lt;&quot; + c + &quot;:a: [&quot; + (p? &quot;\n&quot; + i: &quot;&quot;) +
+                            values.join(p? &quot;,\n&quot; + i: &quot;, &quot;) +
+                        (p? &quot;\n&quot; + i.substr(0, i.length - 2): &quot;&quot;) + &quot;]&gt;&quot;;
+                }
+
+                values = map(v, function (v, k) {
+                    if (isObject(v)) {
+                        counter += 1;
+                    }
+
+                    return JSON.stringify(k) + &quot;: &quot; + d(v, p, i, counter, s);
+                });
+
+                return values.length === 0?
+                    &quot;&lt;&quot; + c + &quot;:o: {}&gt;&quot;:
+                    &quot;&lt;&quot; + c + &quot;:o: {&quot; + (p? &quot;\n&quot; + i: &quot;&quot;) +
+                        values.join(p? &quot;,\n&quot; + i: &quot;&quot;) +
+                    (p? &quot;\n&quot; + i.substr(0, i.length - 2): &quot;&quot;) + &quot;}&gt;&quot;;
+            }
+
+            switch (true) {
+            case isBoolean(v):      return &quot;&lt;b: &quot; + v + &quot;&gt;&quot;;
+            case isNumber(v):       return &quot;&lt;n: &quot; + v.toString() + &quot;&gt;&quot;;
+            case isString(v):       return &quot;&lt;s: &quot; + JSON.stringify(v) + &quot;&gt;&quot;;
+            case myIsNaN(v):        return &quot;&lt;nan&gt;&quot;;
+            case v === null:        return &quot;&lt;null&gt;&quot;;
+            case v === undefined:   return &quot;&lt;undefined&gt;&quot;;
+            default:                return &quot;&lt;unknown: &quot; + v.toString() + &quot;&gt;&quot;;
+            }
+        };
+
+        return function (value, pretty) {
+            return d(value, arguments.length &gt; 1? pretty: true, &quot;&quot;, 0, []);
+        };
+    }());
+
+    /**
+     * Exported utilities class.
+     *
+     * @class parts.Parts
+     * @static
+     */
+    var parts = {
+
+        /**
+         * Returns a function that when called returns always the same
+         * starting value.
+         *
+         * @method constant
+         * @for parts.Parts
+         *
+         * @param {mixed} value
+         * @return {function}
+         */
+        constant: constant,
+
+        /**
+         * A function that does nothing and returns undefined. Useful when
+         * you need a noop function.
+         *
+         * @method k
+         * @for parts.Parts
+         */
+        k: k,
+
+        /**
+         * Returns a function that when called, passes the arguments
+         * collection as an array to the passed function as its first
+         * parameter.
+         *
+         * @method args
+         * @for parts.Parts
+         *
+         * @param {function} f
+         *
+         * @return {function}
+         */
+        args: args,
+
+        /**
+         * Processes the function on the next tick.
+         *
+         * @method work
+         * @for parts.Parts
+         *
+         * @param {function} f
+         */
+        work: work,
+
+        /**
+         * Short for object.hasOwnProperty(property).
+         *
+         * @method hop
+         * @for parts.Parts
+         *
+         * @param {Object} object
+         * @param {string} property
+         *
+         * @return {boolean}
+         */
+        hop: hop,
+
+        /**
+         * Copy the properties from the &quot;source&quot; object onto the
+         * &quot;target&quot; object. Optionally it can be passed an array
+         * containing the property-list to be copied, if ommited, all
+         * own properties should be copied.
+         *
+         * @method merge
+         * @for parts.Parts
+         *
+         * @param {Object} target
+         * @param {Object} source
+         * @param {array} [propertyList]
+         */
+        merge: merge,
+
+        /**
+         * Looks for the first ocurrence that satisfies the conditional
+         * function of a given value within an array or an object,
+         * returning its index or property.
+         *
+         * The conditional function will be called for each item within
+         * the collection, it will receive the item as first parameter
+         * and its index as the second. The function must return a
+         * boolean indicating whether the condition has been met.
+         *
+         * @method indexOf
+         * @for parts.Parts
+         *
+         * @param {array|object|string} collection
+         * @param {function} condition
+         *
+         * @return {number|string}
+         */
+        indexOf: indexOf,
+
+        /**
+         * Returns the first ocurrence that satisfies the conditional
+         * function of a given value within an array or an object.
+         *
+         * The conditional function will be called for each item within
+         * the collection, it will receive the item as first parameter
+         * and its index as the second. The function must return a
+         * boolean indicating whether the condition has been met.
+         *
+         * If the function is ommited, it will return the first item
+         * within the collection.
+         *
+         * @method first
+         * @for parts.Parts
+         *
+         * @param {array|object|string} collection
+         * @param {function} [condition]
+         *
+         * @return {mixed}
+         */
+        first: first,
+
+        /**
+         * Executes a function for each item within the collection
+         * (array or object), passing the item itself as the first
+         * parameter and it&#x27;s index as the second parameter.
+         *
+         * @method forEach
+         * @for parts.Parts
+         *
+         * @param {array|object|string} collection
+         * @param {function} f
+         */
+        forEach: forEach,
+
+        /**
+         * Iterates through the items of a collection, calling the map
+         * function for each of those items, passing the item itself as
+         * first parameter and it&#x27;s index as the second parameter. The
+         * function&#x27;s return will be pushed to a new array that will be
+         * returned in the end.
+         *
+         * @method map
+         * @for parts.Parts
+         *
+         * @param {array|object|string} collection
+         * @param {function} f
+         *
+         * @return {array}
+         */
+        map: map,
+
+        /**
+         * Short for:
+         * var args = Array.prototype.slice.call(arguments);
+         * return Array.prototype.slice.apply(args.shift(), args);
+         *
+         * @method slice
+         * @for parts.Parts
+         *
+         * @param {mixed} collection
+         * @param {number} [begin=0]
+         * @param {number} [end]
+         *
+         * @return {array}
+         */
+        slice: slice,
+
+        /**
+         * Kind of a method overloading. It should be called passing
+         * various functions, each with a different number of declared
+         * parameters.
+         *
+         * It will return a function that depending of the number of
+         * arguments passed, will call the respective function. If there
+         * is no respective function for a given number of arguments,
+         * the latter function will be used as default.
+         *
+         * @method overload
+         * @for parts.Parts
+         *
+         * @param {function} functions*
+         *
+         * @return {function}
+         */
+        overload: overload,
+
+        /**
+         * Returns a function that when called, it will pass the _this_
+         * object as first parameter, along with the remaining
+         * parameters if any.
+         *
+         * @method that
+         * @for parts.Parts
+         *
+         * @param {function} thatFunction
+         *
+         * @return {function}
+         */
+        that: that,
+
+        /**
+         * Indicates whether a pair of values are equal between themselves.
+         *
+         * Equals may mean the following:
+         *
+         * - are equal using ==
+         * - are arrays and have values that are equal along with themselves
+         * (recursively)
+         * - are objects and have properties that are equal along with
+         * themselves (recursively)
+         * - are Date and have the same time
+         * - are RegExp and have the same toString
+         *
+         * @method equals
+         * @for parts.Parts
+         *
+         * @param {mixed} a
+         * @param {mixed} b
+         *
+         * @return {boolean}
+         */
+        equals: function (a, b) {
+            return equals(a, b, [], []);
+        },
+
+        /**
+         * Performs a check upon every item within the collection, if all of
+         * them returns true, then it returns true.
+         *
+         * @method every
+         * @for parts.Parts
+         *
+         * @param {array|object|string} c
+         * @param {function} f
+         *
+         * @return {boolean}
+         */
+        every: every,
+
+        /**
+         * Performs a check upon every item within the collection, if one of
+         * them returns true, then it returns true.
+         *
+         * @method every
+         * @for parts.Parts
+         *
+         * @param {array|object|string} c
+         * @param {function} f
+         *
+         * @return {boolean}
+         */
+        some: some,
+
+        /**
+         * Indicates whether a given value is an array.
+         *
+         * @method isArray
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isArray: isArray,
+
+        /**
+         * Indicates whether a given value is a function.
+         *
+         * @method isFunction
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isFunction: isFunction,
+
+        /**
+         * Indicates whether a given value is an object.
+         *
+         * @method isObject
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isObject: isObject,
+
+        /**
+         * Indicates whether a given value is a Date instance.
+         *
+         * @method isDate
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isDate: isDate,
+
+        /**
+         * Indicates whether a given value is a RegExp instance.
+         *
+         * @method isRegExp
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isRegExp: isRegExp,
+
+        /**
+         * Asserts that a given value is NaN.
+         *
+         * Note that the value should be the actual NaN and not something that
+         * converts to NaN.
+         *
+         * @method isNaN
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isNaN: myIsNaN,
+
+        /**
+         * Indicates whether a given value is a boolean.
+         *
+         * @method isBoolean
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isBoolean: isBoolean,
+
+        /**
+         * Indicates whether a given value is a number and is not NaN.
+         *
+         * @method isNumber
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isNumber: isNumber,
+
+        /**
+         * Indicates whether a given value is a string.
+         *
+         * @method isString
+         * @for parts.Parts
+         *
+         * @param {mixed} v
+         *
+         * @return {boolean}
+         */
+        isString: isString,
+
+        /**
+         * Shoft for new Date().getTime().
+         *
+         * @method now
+         * @for parts.Parts
+         *
+         * @return {number}
+         */
+        now: now,
+
+        /**
+         * Returns a function that compares a given value with some other value.
+         *
+         * @method sameAs
+         * @for parts.Parts
+         *
+         * @param {function} f
+         *
+         * @return {function}
+         */
+        sameAs: sameAs,
+
+        /**
+         * Returns a function that calls the given function passing along its
+         * arguments, but negates its value.
+         *
+         * @method negate
+         * @for parts.Parts
+         *
+         * @param {function} f
+         *
+         * @return {function}
+         */
+        negate: negate,
+
+        /**
+         * Object making utility.
+         *
+         * It is useful when you want to declare object and cant use expressions
+         * in the object keys within literals.
+         *
+         * The function may receive a key/value upon first call it will return
+         * chainable function that receives key/values at each call to populate
+         * the object being built.
+         *
+         * When the object is ready, the build function may be called to retain
+         * the built object.
+         *
+         * @method make
+         * @for parts.Parts
+         *
+         * @param {string} k A key
+         * @param {mixed} v A value for the given key
+         * @return {function} The chainable function
+         */
+        make: function (k, v) {
+            var o = {};
+            var f = function (k, v) {
+                o[k] = v;
+                return f;
+            };
+
+            f.build = constant(o);
+
+            return f;
+        },
+
+        /**
+         * Returns a string representation of a given value for debugging
+         * purposes.
+         *
+         * - __b__: Boolean value
+         * - __n__: Number value
+         * - __s__: String value
+         * - __d__: Date object
+         * - __f__: Function object
+         * - __r__: Regex object
+         * - __a__: Array object
+         * - __nan__: &#x60;NaN&#x60; value
+         * - __null__: &#x60;null&#x60; value
+         * - __undefined__: &#x60;undefined&#x60; value
+         * - __ref__: Reference to a previous inspected object (with its number)
+         *
+         * &#x60;&#x60;&#x60;
+         * parts.dump(true);
+         * // &lt;b: true&gt;
+         *
+         * parts.dump(1);
+         * // &lt;n: 1&gt;
+         *
+         * parts.dump(&quot;msg&quot;);
+         * // &lt;s: &quot;msg&quot;&gt;
+         *
+         * parts.dump(someNaN);
+         * // &lt;nan&gt;
+         *
+         * parts.dump(null);
+         * // &lt;null&gt;
+         *
+         * parts.dump(undefined);
+         * // &lt;undefined&gt;
+         *
+         * parts.dump(new Date());
+         * // &lt;0:d: Thu Oct 27 2016 14:48:52 GMT-0200 (BRST)&gt;
+         *
+         * parts.dump(function () {});
+         * // &lt;0:f: function () {}&gt;
+         *
+         * parts.dump(/\d+/);
+         * // &lt;0:r: /\\d+/&gt;
+         *
+         * parts.dump({});
+         * // &lt;0:o: {}&gt;
+         *
+         * parts.dump({ a: 1 });
+         * // &lt;0:o: {
+         * //   &quot;a&quot;: &lt;n: 1&gt;
+         * // }&gt;
+         *
+         * parts.dump([]);
+         * // &lt;0:a: []&gt;
+         *
+         * parts.dump([1]);
+         * // &lt;0:a: [
+         * //   &lt;n: 1&gt;
+         * // ]&gt;
+         *
+         * var o = {};
+         * o.o = o;
+         * parts.dump(o);
+         * // &lt;0:o: {
+         * //   &quot;o&quot;: &lt;0:ref&gt;
+         * // }&gt;
+         * &#x60;&#x60;&#x60;
+         *
+         * @method dump
+         * @for parts.Parts
+         *
+         * @param {mixed} value
+         * @return {string}
+         */
+        dump: dump,
+
+        /**
+         * Formats a given message using the values within the placeholders
+         * inside the message itself.
+         *
+         * There are 2 kinds of placeholders literal ones (marked by the __%__
+         * sign) and the ones that dump values (marked by the __$__ sign).
+         *
+         * Literal placeholders will use the values as is, while the other one
+         * will {{#crossLink &quot;parts.Parts/dump&quot;}}{{/crossLink}} every value
+         * before using it within the message.
+         *
+         * &#x60;&#x60;&#x60;
+         * parts.format(&quot;The number is %s&quot;, [1]);
+         * // The number is 1
+         *
+         * parts.format(&quot;The value is $s&quot;, [1]);
+         * // The value is &lt;n: 1&gt;
+         * &#x60;&#x60;&#x60;
+         *
+         * Values may be reference by the order in which they appear (using &#x60;$s&#x60;
+         *  or &#x60;%s&#x60;), or by its position (&#x60;%1&#x60; or &#x60;$1&#x60;).
+         *
+         * &#x60;&#x60;&#x60;
+         * parts.format(&quot;The numbers are %s, %s and %s&quot;, [1, 2, 3]);
+         * // The numbers are 1, 2 and 3
+         *
+         * parts.format(
+         *     &quot;The 3rd number is %3, the 2nd is %2 and the 1st is %1&quot; ,
+         *     [1, 2 ,3]);
+         * // The 3rd number is 3, the 2nd is 2 and the 1st is 1
+         *
+         * parts.format(&quot;The 2nd value is $2 and the 1st number is %1&quot;, [1, 2]);
+         * // The 2nd value is &lt;n: 2&gt; and the 1st number is 1
+         *
+         * parts.format(&quot;Mixed placeholders $s, %s, $4, %3&quot;, [1, 2, 3, 4]);
+         * // Mixed placeholders &lt;n: 1&gt;, 2, &lt;n: 4&gt;, 3
+         * &#x60;&#x60;&#x60;
+         *
+         * @method format
+         * @for parts.Parts
+         *
+         * @param {string} msg
+         * @param {mixed[]} values
+         */
+        format: format,
+
+        /**
+         * Calls the constructor function passing the array of arguments within
+         * it.
+         *
+         * It actually creates an anonymous subclass for the function and
+         * calls it after it created the object itself. Its close enough for
+         * most purposes.
+         *
+         * @method applyNew
+         * @for parts.Parts
+         *
+         * @param {function} type The constructor function
+         * @param {mixed[]} args The arguments to be passed to the constructor
+         *            function
+         *
+         * @return {mixed}
+         */
+        applyNew: function (type, args) {
+            var F = function () { type.apply(this, args); };
+            F.prototype = type.prototype;
+            return new F();
+        },
+
+        /**
+         * Calls the function and ignores any thrown error
+         *
+         * @method silence
+         * @for parts.Parts
+         *
+         * @param {function} f The function block to be executed
+         *
+         * @return {mixed} returns the function returned value
+         */
+        silence: function (f) {
+
+            try { return f(); } catch (e) {}
+        }
+    };
+
+    if (node) {
+        module.exports = parts;
+    } else {
+        main.parts = parts;
+    }
+
+}(typeof exports !== &quot;undefined&quot; &amp;&amp; global.exports !== exports));
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>
