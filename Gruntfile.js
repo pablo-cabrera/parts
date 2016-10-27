@@ -22,17 +22,11 @@ module.exports = function (grunt) {
                 "*/"
         },
 
-        test: {
-            dev: {
-                src: testFiles,
+        gabarito: {
+            src: testFiles,
 
-                options: {
-                    config: ".gabarito-dev.rc"
-                }
-            },
-
-            ci: {
-                src: testFiles
+            options: {
+                environments: ["node", "phantom"]
             }
         },
 
@@ -86,9 +80,7 @@ module.exports = function (grunt) {
                 options: {
                     paths: "lib/",
                     outdir: "docs/",
-                    themedir: "node_modules/yuidoc-lucid-theme",
-                    helpers: ["node_modules/yuidoc-lucid-theme/" +
-                            "helpers/helpers.js"]
+                    themedir: "node_modules/yuidoc-clear-theme"
                 }
             }
         },
@@ -117,7 +109,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask("lint", ["jscs", "jshint"]);
 
-    grunt.registerTask("default", ["lint", "test:dev"]);
-    grunt.registerTask("ci", ["lint", "test:ci"]);
+    grunt.registerTask("default", ["lint", "gabarito"]);
     grunt.registerTask("dist", ["uglify"]);
 };
