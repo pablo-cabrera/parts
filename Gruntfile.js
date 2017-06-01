@@ -104,11 +104,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-yuidoc");
-    grunt.loadNpmTasks("grunt-gabarito");
+    // grunt.loadNpmTasks("grunt-gabarito");
     grunt.loadNpmTasks("grunt-jscs");
 
     grunt.registerTask("lint", ["jscs", "jshint"]);
 
-    grunt.registerTask("default", ["lint", "gabarito"]);
+    grunt.registerTask("default", ["lint"/*, "gabarito"*/]);
     grunt.registerTask("dist", ["uglify"]);
 };

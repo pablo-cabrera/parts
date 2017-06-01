@@ -1,6 +1,6 @@
 {
   "name": "parts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Pablo Cabrera <pablo@chaordicsystems.com>",
   "description": "Utilities for JavaScript",
   "homepage": "https://github.com/pablo-cabrera/parts",
@@ -11,16 +11,15 @@
   "license": "MIT",
   "main": "./lib/parts.js",
   "devDependencies": {
-    "gabarito": "^0.0.1",
     "grunt": "^0.4",
     "grunt-contrib-clean": "^0.6",
     "grunt-contrib-copy": "^0.8",
     "grunt-contrib-jshint": "^0.11",
     "grunt-contrib-uglify": "^0.8",
     "grunt-contrib-yuidoc": "^0.4",
-    "grunt-gabarito": "^0.0.4",
     "grunt-jscs": "^1.5",
-    "yuidoc-clear-theme": "^2.0.0"
+    "yuidoc-clear-theme": "^2.0.0",
+    "colors": "^1.0.3"
   },
   "scripts": {
     "test": "grunt"
@@ -30,17 +29,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "dependencies": {
-    "colors": "^1.0.3",
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-uglify": "^0.8.0",
-    "grunt-contrib-yuidoc": "^0.4.0",
-    "grunt-jscs": "^1.5.0",
-    "yuitest": "^0.7.9",
-    "grunt-contrib-copy": "^0.8.0"
   },
   "keywords": [
     "utililies"
